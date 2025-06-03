@@ -1,0 +1,72 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, router } from '@inertiajs/vue3';
+
+const props =defineProps({
+    users : Array,
+});
+
+const showTask = (id) => {
+  router.get(route('tasks.show', { id }));
+};
+
+</script>
+
+<template>
+    <Head title="タスク一覧" />
+
+    <AuthenticatedLayout>
+        <template #header>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                タスク一覧
+            </h2>
+        </template>
+
+        <div class="py-12">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                    <div class=" text-gray-900">
+                        <section class="text-gray-600 body-font">
+                            <div class="container px-5 w-2/3 mx-auto">
+                                <div>
+                                    <div class="my-10" v-for="user in users" :key="user.id" style="box-shadow: 6px 10px 29px -7px #777777; border-radius: 29px;">
+                                        <div class="border border-gray-200 p-6 rounded-lg">
+                                            <div class="flex items-center mb-3">
+                                                <div class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 m-2">
+                                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                                    </svg>
+                                                </div>
+                                                <h2>👤 {{ user.name }}</h2>
+                                            </div>
+                                            <div class=" w-full mx-auto overflow-auto">
+                                                <table class="table-auto  text-left whitespace-no-wrap border-collapse">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">タスク</th>
+                                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">優先度</th>
+                                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タスク状態</th>
+                                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">期限</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="task in user.tasks" :key="task.id" class="cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-blue-100" @click="showTask(task.id)">
+                                                            <td class="p-3 border-none">{{ task.title }}</td>
+                                                            <td class="p-3">{{ task.priority_jp }}</td>
+                                                            <td class="p-3">{{ task.status_jp }}</td>
+                                                            <td class="p-3">{{ task.due_date_formatted }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </AuthenticatedLayout>
+</template>

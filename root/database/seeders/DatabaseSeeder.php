@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@example.com',
-
+            'password' => Hash::make('admin@0000'),
         ]);
 
         $this->call(TaskSeeder::class);
