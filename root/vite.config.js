@@ -3,9 +3,9 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
-    // vue用
+    // vue用に追加
     server: {
-        host: '0.0.0.0', // または '::'
+        host: '0.0.0.0', 
         port: 5173,
     },
     plugins: [
