@@ -10,15 +10,18 @@ const props = defineProps({
 });
 
 const taskData = ref({});
+const userData = ref({
+    name: '',
+});
 
 const modalVisible = ref(false);
 
-const showTask = (task) => {
+const showTask = (task, userName) => {
     taskData.value = task;
+    userData.value.name = userName;
     modalVisible.value = true
-    console.log(taskData.value);
+    // console.log(userData.value);
 };
-
 
 </script>
 
@@ -39,7 +42,7 @@ const showTask = (task) => {
                         <section class="text-gray-600 body-font">
                             <!-- Modal -->
                             <Modal :show="modalVisible" @close="modalVisible = false">
-                                <TaskShow :taskData="taskData" @close="modalVisible = false"/>
+                                <TaskShow :taskData="taskData" :userName="userData.name" @close="modalVisible = false"/>
                             </Modal>
                             <div class="container px-5 w-2/3 mx-auto">
                                 <div>
@@ -53,23 +56,23 @@ const showTask = (task) => {
                                                 </div>
                                                 <h2>👤 {{ user.name }}</h2>
                                             </div>
-                                            <div class=" w-full mx-auto overflow-auto">
-                                                <table class="table-auto  text-left whitespace-no-wrap border-collapse">
+                                            <div class="w-full mx-auto">
+                                                <table class="table-auto text-left whitespace-no-wrap border-collapse w-full">
                                                     <thead>
                                                         <tr>
                                                             <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">タスク</th>
-                                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">優先度</th>
-                                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タスク状態</th>
-                                                            <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">期限</th>
+                                                            <th class="px-4 py-3 text-center title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">優先度</th>
+                                                            <th class="px-4 py-3 text-center title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">タスク状態</th>
+                                                            <th class="px-4 py-3 text-center title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">期限</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="task in user.tasks" :key="task.id" @click="showTask(task)"
+                                                        <tr v-for="task in user.tasks" :key="task.id" @click="showTask(task, user.name)"
                                                             class="cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-blue-100">
-                                                            <td class="p-3 border-none">{{ task.title }}</td>
-                                                            <td class="p-3">{{ task.priority_jp }}</td>
-                                                            <td class="p-3">{{ task.status_jp }}</td>
-                                                            <td class="p-3">
+                                                            <td class="p-3 tracking-wider">{{ task.title }}</td>
+                                                            <td class="p-3 text-center tracking-wider">{{ task.priority_jp }}</td>
+                                                            <td class="p-3 text-center tracking-wider">{{ task.status_jp }}</td>
+                                                            <td class="p-3 text-center tracking-wider">
                                                                 <span v-if="task.due_date === null">期限なし</span>
                                                                 <span v-if="task.due_date !== null">{{ task.due_date_formatted }}</span>
                                                             </td>
