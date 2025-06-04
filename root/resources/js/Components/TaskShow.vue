@@ -4,25 +4,28 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 
 const props = defineProps({
-    taskData : Object
+    taskData : Object,
+    userName : String,
 });
 
 const form = reactive({
-    title: props.taskData.title,
+    id : props.taskData.id,
+    title : props.taskData.title,
     priority : props.taskData.priority,
     due_date : props.taskData.due_date,
     description : props.taskData.description,
     status : props.taskData.status,
 });
 
-const updateTask = () => {
-    router.post(route('tasks.store'), form);
-};
-
 const emit = defineEmits(['close']);
 
 const close = () => {
     emit('close'); // 親に「閉じて」と伝える
+};
+
+const updateTask = (id) => {
+    router.put(route('tasks.update', {id}), form);
+    emit('close');
 };
 </script>
 
@@ -33,8 +36,15 @@ const close = () => {
         <div class="overflow-hidden bg-white sm:rounded-lg">
             <div class="p-6 text-gray-900">
                 <section class="text-gray-600 body-font relative flex flex-col">
-                    <button class="self-end cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-gray-50" @click="close">閉じる</button>
-                    <form @submit.prevent="updateTask">
+                    <div class="flex justify-between">
+                        <h1>詳細タスク</h1>
+                        <p>担当者: {{ props.userName }}</p>
+                        <button class="self-end cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-gray-50"
+                            @click="close">
+                            閉じる
+                        </button>
+                    </div>
+                    <form @submit.prevent="updateTask(form.id)">
                         <div class="container px-5 py-5 mx-auto">
                             <div class="lg:w-full md:w-2/3 mx-auto">
                                 <div class="-m-2">

@@ -48,27 +48,13 @@ class TaskController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * タスク作成処理.
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        $task->update($request->validated());
+
+        return to_route('tasks.index')->with('success', 'タスクを更新しました。');
     }
 
     /**
