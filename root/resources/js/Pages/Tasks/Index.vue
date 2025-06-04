@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import Modal from '@/Components/Modal.vue';
 import { reactive, ref } from 'vue';
-import TaskShow from '@/Components/TaskShow.vue';
+import ShowTask from '@/Components/ShowTask.vue';
 
 const props = defineProps({
     users : Array,
@@ -38,12 +38,13 @@ const showTask = (task, userName) => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class=" text-gray-900">
-                        <section class="text-gray-600 body-font">
+                    <div class="text-gray-900">
+                        <section class="text-gray-600 body-font w-full">
                             <!-- Modal -->
                             <Modal :show="modalVisible" @close="modalVisible = false">
-                                <TaskShow :taskData="taskData" :userName="userData.name" @close="modalVisible = false"/>
+                                <ShowTask :taskData="taskData" :userName="userData.name" @close="modalVisible = false"/>
                             </Modal>
+
                             <div class="container px-5 w-2/3 mx-auto">
                                 <div>
                                     <div class="my-10" v-for="user in users" :key="user.id" style="box-shadow: 6px 10px 29px -7px #777777; border-radius: 29px;">
@@ -67,8 +68,8 @@ const showTask = (task, userName) => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="task in user.tasks" :key="task.id" @click="showTask(task, user.name)"
-                                                            class="cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-blue-100">
+                                                        <tr v-for="task in user.tasks" :key="task.id" @click="showTask(task, user.name)" @mousedown="startDrag"
+                                                            class="cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-gray-100">
                                                             <td class="p-3 tracking-wider">{{ task.title }}</td>
                                                             <td class="p-3 text-center tracking-wider">{{ task.priority_jp }}</td>
                                                             <td class="p-3 text-center tracking-wider">{{ task.status_jp }}</td>

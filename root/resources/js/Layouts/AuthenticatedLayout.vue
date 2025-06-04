@@ -22,7 +22,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('tasks.index')">
                                     <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
@@ -34,6 +34,9 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                                 <NavLink :href="route('tasks.create')" :active="route().current('tasks.create')" >
                                     タスク作成
+                                </NavLink>
+                                <NavLink :href="route('admin.register')" :active="route().current('admin.register')" >
+                                    ユーザー登録
                                 </NavLink>
                             </div>
                         </div>
