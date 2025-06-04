@@ -18,7 +18,7 @@ class TaskController extends Controller
     {
         $users = User::select('id', 'name')
             ->with(['tasks' => function($task) {
-                $task->select('id', 'user_id', 'title', 'priority', 'status', 'due_date');
+                $task->select('id', 'user_id', 'description', 'title', 'priority', 'status', 'due_date');
             }])->get();
 
         return Inertia::render('Tasks/Index', [

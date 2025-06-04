@@ -1,14 +1,24 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
+import Modal from '@/Components/Modal.vue';
+import { reactive, ref } from 'vue';
+import TaskShow from '@/Components/TaskShow.vue';
 
-const props =defineProps({
+const props = defineProps({
     users : Array,
 });
 
-const showTask = (id) => {
-  router.get(route('tasks.show', { id }));
+const taskData = ref({});
+
+const modalVisible = ref(false);
+
+const showTask = (task) => {
+    taskData.value = task;
+    modalVisible.value = true
+    console.log(taskData.value);
 };
+
 
 </script>
 
@@ -27,6 +37,10 @@ const showTask = (id) => {
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class=" text-gray-900">
                         <section class="text-gray-600 body-font">
+                            <!-- Modal -->
+                            <Modal :show="modalVisible" @close="modalVisible = false">
+                                <TaskShow :taskData="taskData" @close="modalVisible = false"/>
+                            </Modal>
                             <div class="container px-5 w-2/3 mx-auto">
                                 <div>
                                     <div class="my-10" v-for="user in users" :key="user.id" style="box-shadow: 6px 10px 29px -7px #777777; border-radius: 29px;">
@@ -50,11 +64,15 @@ const showTask = (id) => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="task in user.tasks" :key="task.id" class="cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-blue-100" @click="showTask(task.id)">
+                                                        <tr v-for="task in user.tasks" :key="task.id" @click="showTask(task)"
+                                                            class="cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-blue-100">
                                                             <td class="p-3 border-none">{{ task.title }}</td>
                                                             <td class="p-3">{{ task.priority_jp }}</td>
                                                             <td class="p-3">{{ task.status_jp }}</td>
-                                                            <td class="p-3">{{ task.due_date_formatted }}</td>
+                                                            <td class="p-3">
+                                                                <span v-if="task.due_date === null">期限なし</span>
+                                                                <span v-if="task.due_date !== null">{{ task.due_date_formatted }}</span>
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
