@@ -43,7 +43,7 @@ return [
 
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admin',
+            'provider' => 'admins',
         ],
     ],
 
@@ -70,9 +70,9 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Admin::class),
+            'model' => env('ADMIN_AUTH_MODEL', App\Models\Admin::class),
         ],
     ],
 
@@ -104,8 +104,8 @@ return [
         ],
 
         'admin' => [
-            'provider' => 'admin',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'provider' => 'admins',
+            'table' => env('ADMIN_AUTH_PASSWORD_RESET_TOKEN_TABLE', 'admin_password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
         ],

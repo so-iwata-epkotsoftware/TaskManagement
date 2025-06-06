@@ -9,10 +9,6 @@ use Inertia\Inertia;
 
 Route::middleware('auth')->resource('tasks', TaskController::class);
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function() {
-    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-});
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -28,5 +24,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+require __DIR__.'/admin/admin.php';
 require __DIR__.'/auth.php';
+
