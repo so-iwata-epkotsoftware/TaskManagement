@@ -33,16 +33,6 @@ Route::middleware('auth:admin')
     });
 
 
-Route::get('/admin', function () {
-    return Inertia::render('Admin/Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-
 Route::middleware('auth:admin')
     ->prefix('admin')
     ->name('admin.')

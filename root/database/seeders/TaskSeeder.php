@@ -15,10 +15,10 @@ class TaskSeeder extends Seeder
     {
 
         Task::factory()
-            ->count(20)
+            ->count(40)
             ->make()
             ->each(function($task) {
-                $task->user_id = rand(1, 4);
+                $task->user_id = rand(1, 10);
                 $task->save();
             });
     }

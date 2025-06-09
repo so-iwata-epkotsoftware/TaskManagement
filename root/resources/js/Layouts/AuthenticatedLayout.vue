@@ -22,21 +22,21 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="route('tasks.index')">
+                                <Link :href="route('user.tasks.index')">
                                     <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('tasks.index')" :active="route().current('tasks.index')" >
-                                    タスク一覧
+                                <NavLink :href="route('user.mytask')" :active="route().current('user.mytask')" >
+                                    My Task
                                 </NavLink>
-                                <NavLink :href="route('tasks.create')" :active="route().current('tasks.create')" >
-                                    タスク作成
+                                <NavLink :href="route('user.tasks.index')" :active="route().current('user.tasks.index')" >
+                                    ALL User Task
                                 </NavLink>
-                                <NavLink :href="route('admin.register')" :active="route().current('admin.register')" >
-                                    ユーザー登録
+                                <NavLink :href="route('user.tasks.create')" :active="route().current('user.tasks.create')" >
+                                    Create Task
                                 </NavLink>
                             </div>
                         </div>
@@ -108,10 +108,13 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden"
                 >
                     <div class="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink :href="route('tasks.index')" :active="route().current('tasks.index')">
+                        <ResponsiveNavLink :href="route('user.tasks.index')" :active="route().current('user.tasks.index')">
+                            My Task
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('user.tasks.index')" :active="route().current('user.tasks.index')">
                             タスク一覧
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('tasks.create')" :active="route().current('tasks.create')">
+                        <ResponsiveNavLink :href="route('user.tasks.create')" :active="route().current('user.tasks.create')">
                             タスク作成
                         </ResponsiveNavLink>
                     </div>
