@@ -7,6 +7,7 @@ import ShowTask from '@/Components/ShowTask.vue';
 
 const props = defineProps({
     users : Array,
+    authUserId: Number,
 });
 
 const taskData = ref({});
@@ -47,7 +48,7 @@ const showTask = (task, userName) => {
 
                             <div class="container px-5 w-2/3 mx-auto">
                                 <div>
-                                    <div class="my-10" v-for="user in users" :key="user.id" style="box-shadow: 6px 10px 29px -7px #777777; border-radius: 29px;">
+                                    <div class="my-10" v-for="user in props.users" :key="user.id" style="box-shadow: 6px 10px 29px -7px #777777; border-radius: 29px;">
                                         <div class="border border-gray-200 p-6 rounded-lg">
                                             <div class="flex items-center mb-3">
                                                 <div class="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 m-2">
@@ -68,8 +69,9 @@ const showTask = (task, userName) => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="task in user.tasks" :key="task.id" @click="showTask(task, user.name)" @mousedown="startDrag"
-                                                            class="cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-gray-100">
+                                                        <tr v-for="task in user.tasks" :key="task.id"
+                                                            @click="user.id === props.authUserId ?  showTask(task, user.name) : null"
+                                                            class='cursor-pointer transition transform hover:scale-[1.01] hover:shadow-md hover:bg-gray-100'>
                                                             <td class="p-3 tracking-wider">{{ task.title }}</td>
                                                             <td class="p-3 text-center tracking-wider">{{ task.priority_jp }}</td>
                                                             <td class="p-3 text-center tracking-wider">{{ task.status_jp }}</td>

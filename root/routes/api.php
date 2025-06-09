@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth:sanctum')
-    ->name('admin.api.')
+    ->name('admin.')
     ->group(function() {
-        Route::get('/getuser', [ApiUserController::class, 'getUsers']);
+        Route::get('/getuser', [ApiUserController::class, 'getUsers'])->name('api');
     });
-
-Route::get('/user',[ApiUserController::class, 'getUsers'])->middleware('auth:sanctum');

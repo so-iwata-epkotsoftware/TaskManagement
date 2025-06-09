@@ -11,7 +11,7 @@ const form = reactive({
 });
 
 const storeTask = () => {
-    router.post(route('tasks.store'), form);
+    router.post(route('user.tasks.store'), form);
 };
 
 </script>

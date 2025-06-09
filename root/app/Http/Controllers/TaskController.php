@@ -12,6 +12,16 @@ use Inertia\Inertia;
 class TaskController extends Controller
 {
     /**
+     *  ユーザー１人のタスク表示
+     */
+    public function myTask()
+    {
+        return Inertia::render('User/Tasks/MyTask', [
+            'user' => User::select('id', 'name')->where('id', Auth::id())->with('tasks')->get(),
+        ]);
+    }
+
+    /**
      *  全ユーザータスク表示
      */
     public function index()
@@ -21,8 +31,9 @@ class TaskController extends Controller
                 $task->select('id', 'user_id', 'description', 'title', 'priority', 'status', 'due_date');
             }])->get();
 
-        return Inertia::render('Tasks/Index', [
+        return Inertia::render('User/Tasks/Index', [
             'users' => $users,
+            'authUserId' => Auth::id(),
         ]);
     }
 
@@ -31,7 +42,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Tasks/Create');
+        return Inertia::render('User/Tasks/Create');
     }
 
     /**
@@ -44,26 +55,26 @@ class TaskController extends Controller
 
         Task::create($task);
 
-        return to_route('tasks.index')->with('success', 'タスクを作成しました。');
+        return to_route('user.mytask')->with('success', 'タスクを作成しました。');
     }
 
     /**
-     * タスク作成処理.
+     * タスク更新処理.
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $task->update($request->validated());
 
-        return to_route('tasks.index')->with('success', 'タスクを更新しました。');
+        return to_route('user.mytask')->with('success', 'タスクを更新しました。');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * タスク削除処理
      */
     public function destroy(Task $task)
     {
         $task->delete();
 
-        return to_route('tasks.index')->with('success', 'タスクを削除しました。');
+        return to_route('user.mytask')->with('success', 'タスクを削除しました。');
     }
 }

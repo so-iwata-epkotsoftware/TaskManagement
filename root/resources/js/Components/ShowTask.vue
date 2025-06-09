@@ -23,15 +23,16 @@ const close = () => {
 };
 
 const updateTask = (id) => {
-    router.put(route('tasks.update', {id}), form);
+    router.put(route('user.tasks.update', {id}), form);
     emit('close');
 };
 
 const deleteTask = id => {
-    router.delete(route('tasks.destroy', {id}), {
-        onBefore: () => confirm('本当に削除しますか'),
+    if (!confirm('本当に削除しますか？')) return;
+
+    router.delete(route('user.tasks.destroy', {id}), {
+        onSuccess: () => emit('close'),
     });
-    emit('close');
 };
 </script>
 
