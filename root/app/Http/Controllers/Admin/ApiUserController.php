@@ -10,7 +10,6 @@ class ApiUserController extends Controller
 {
     public function getUsers()
     {
-
         return response()->json(['users' => User::select('id', 'name')->get()]);
     }
 }
